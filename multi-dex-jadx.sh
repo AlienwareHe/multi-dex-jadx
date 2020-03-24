@@ -28,10 +28,13 @@ echo "source apk path:"$apkPath
 echo "source apk name:"$apkName
 echo "decompile result path:"$outputDir
 
-cp $apkPath "$apkName".zip
+mkdir $outputDir
 
-# unzip -o "$apkName".zip -d $outputDir > /dev/null
+cp $apkPath "$outputDir"/"$apkName".zip
+
+unzip -o "$outputDir"/"$apkName".zip -d $outputDir > /dev/null
 codePath=$outputDir"/code"
+echo "decompile code path:"$codePath
 mkdir $codePath
 
 index=1
