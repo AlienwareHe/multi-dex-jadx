@@ -24,17 +24,22 @@ if [ x"$outputDir" = x ];then
 	outputDir="$apkName"_jadx 
 fi
 
+codePath=$outputDir"/code"
+apkZipTemp="$outputDir"/"$apkName".zip
+apkToolPath=$outputDir"/apktool"
+
 echo "source apk path:"$apkPath
 echo "source apk name:"$apkName
 echo "decompile result path:"$outputDir
+echo "decompile code path:"$codePath
+echo "apktool decompile path:"$apkToolPath
+
 
 mkdir $outputDir
 
-cp $apkPath "$outputDir"/"$apkName".zip
+cp $apkPath $apkZipTemp
 
-unzip -o "$outputDir"/"$apkName".zip -d $outputDir > /dev/null
-codePath=$outputDir"/code"
-echo "decompile code path:"$codePath
+unzip -o $apkZipTemp -d $outputDir > /dev/null
 mkdir $codePath
 
 index=1
@@ -45,7 +50,17 @@ do
 		# rsync中目录路径带/表示将所有文件复制到目标目录下，而非复制文件夹 
 		rsync -a "$codePath"_"$index"/ $codePath
 		# 删除临时目录
-		rm -rf. "$codePath"_"$index"
+		rm -rf "$codePath"_"$index"
 		let index++
+	elif [[ $file == code* ]];then
+		echo $file
+	else
+		# 其余文件删除
+		echo "rm -rf $file"
+		rm -rf $file
 	fi
 done
+
+apktool d $apkPath -o $apkToolPath
+
+rm -rf $apkZipTemp

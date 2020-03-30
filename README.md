@@ -2,6 +2,9 @@
 
 因此写了个脚本工具自动将apk解压，分别编译每个dex文件最后通过rsync将所有反编译产出合并。
 
+# base
+基于jadx与apktool，因此确保这两个命令都添加至了环境变量中
+
 # feature
 * jadx反编译dex成java文件
 * apktool反编译资源文件及smali文件
