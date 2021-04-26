@@ -15,4 +15,4 @@
 -o 反编译产出目录
 
 # eg
-./multi-dex-jadx.sh -d ~/code/crawl/elong_9_58_2.apk -o ./hello
+./multi-dex-jadx.sh -d ~/code/crawl/xxxx.apk -o ./hello
